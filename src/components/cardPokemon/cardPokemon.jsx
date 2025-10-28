@@ -6,6 +6,7 @@ function CardPokemon({nome, tipo, imagem}) {
     <img src={imagem} alt="Pokemon Image" />
     <h2>Nome: {nome}</h2>
     <p>Tipo: {tipo}</p>
+    <button>Mais detalhes</button>
 </div>
 
     )
