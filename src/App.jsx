@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react'
 import './App.css'
 import ListaPokemons from './components/listaPokemons/listaPokemons'
+import Header from './components/header/header'
+import Footer from './components/footer/footer'
 
 
 function App() {
@@ -10,10 +12,10 @@ function App() {
 
   return (
     <>
-    <h1>Header</h1>
-    <ListaPokemons/>
-    <h1>Footer</h1>
-  </> 
+      <Header/>
+      <ListaPokemons/>
+      <Footer/>
+    </> 
   )
 }
 

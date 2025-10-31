@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import CardPokemon from '.././cardPokemon/cardPokemon.jsx'
 import ModalDetalhes from "../modalDetalhes/modalDetalhes.jsx"
 import './listaPokemons.css'
+import Paginacao from "../paginacao/paginacao.jsx"
 
 function ListaPokemons(){
 
@@ -13,6 +14,7 @@ function ListaPokemons(){
     const [modalAberto, setModalAberto] = useState(false)
     const [loading, setLoading] = useState(false)
     const [favoritos, setFavoritos] = useState([])
+    const [qtdPaginas, setQtdPaginas] = useState(0)
 
     const [pokemonSelecionado, setPokemonSelecionado] = useState({})
 
@@ -31,6 +33,19 @@ function ListaPokemons(){
         setPokemonSelecionado(pokemon)
         setModalAberto(true)
 
+    }
+    async function obterQtdPaginas() {
+        const request = await fetch("https://pokeapi.co/api/v2/pokemon")
+        const response = await request.json()
+
+        const totalPokemons = response.count
+
+        
+        
+
+        setQtdPaginas(Math.ceil(totalPokemons / qtdPagina))
+
+        
     }
 
     async function buscarPokemons(pagina, qtdPagina) {
@@ -87,6 +102,7 @@ function ListaPokemons(){
         } catch (err) {
             console.log(`Erro ao carregar favoritos ${err}`)
         }
+         obterQtdPaginas()
     }, [])
 
     //Atualiza os favoritos no localstorage sempre que um for alterado
@@ -96,6 +112,7 @@ function ListaPokemons(){
     ,[favoritos])
 
     useEffect(()=>{
+       
         buscarPokemons(pagina, qtdPagina)
     }, [pagina, qtdPagina])
 
@@ -111,11 +128,13 @@ function ListaPokemons(){
                     loading ? (<p>Carregando...</p>) : listaPokemons.length > 0 ?  (
                                             listaPokemons.map((pokemon, index) => ( 
                                                     <CardPokemon 
-                                                    key={index} 
-                                                    nome={pokemon.name} 
-                                                    tipo={pokemon.types[0].type.name} 
-                                                    imagem={pokemon.sprites.front_default} 
-                                                    mostrarDetalhes={() => mostrarDetalhes(pokemon)} 
+                                                        key={index} 
+                                                        nome={pokemon.name} 
+                                                        //Percorrendo os tipos e usando um map com join para mostrar corretamente no card quando tem mais de um tipo
+                                                        tipo={pokemon.types.map(t => t.type.name).join(' / ')} 
+                                                        imagem={pokemon.sprites.front_default} 
+                                                        //Passando a função de abrir modal com os parâmetros certos ao clicar no botão
+                                                        mostrarDetalhes={() => mostrarDetalhes(pokemon)} 
                                                     />
                                             ))) : (<p>Nenhum pokémon encontrado</p>)
                     }
@@ -124,7 +143,9 @@ function ListaPokemons(){
                     <button onClick={() => setPagina(1)} disabled={pagina === 1}>Inicio</button>
                     <button onClick={() => setPagina(pagina - 1)} disabled={pagina === 1}>Anterior</button>
                     <button onClick={() => setPagina(pagina + 1)}>Próxima</button>
+                    <button onClick={() => setPagina(pagina + 1)}>Ultima</button>
                 </nav>
+                <Paginacao paginaAtual={pagina} qtdPaginas={qtdPaginas} setPagina={setPagina}/>
             </div>
         </>
     )
