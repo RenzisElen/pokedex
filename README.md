@@ -1,4 +1,4 @@
-# Projeto Pokédex
+# Projeto Pokédex - Catálogo de Pokémons
 
 Esta é uma aplicação web desenvolvida como um teste técnico para listar, buscar e ver detalhes de Pokémons consumindo a PokeAPI. O foco foi criar uma interface funcional, com bom gerenciamento de estado e um design responsivo e bonito.
 
