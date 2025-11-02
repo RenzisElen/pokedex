@@ -1,5 +1,28 @@
-.paginacao{
-    display: flex;
-    justify-content: center;
-    align-items: center;
+
+.paginacao {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+}
+
+.paginacao button {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 8px;
+  background-color: #E63946;
+  color: #ffffff;
+  transition: background-color 0.2s;
+}
+
+.paginacao button:hover {
+  background-color: #D62828;
+}
+
+.paginacao button:disabled {
+  background-color: #444;
+  color: #888;
+  cursor: not-allowed;
+  opacity: 0.7;
 }

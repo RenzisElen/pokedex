@@ -84,14 +84,10 @@ function ListaPokemons(){
 
         const totalPokemons = response.count
 
-        
-        
-
         setQtdPaginas(Math.ceil(totalPokemons / qtdPagina))
 
         
     }
-
     async function buscarPokemons(pagina, qtdPagina) {
         try{
             obterQtdPaginas()
@@ -127,9 +123,15 @@ function ListaPokemons(){
             setMostrandoFavoritos(false)
             setQtdPaginas(1)
             setLoading(true)
-            const request = await fetch(`https://pokeapi.co/api/v2/pokemon/${nome}`)
-            const response = await request.json()
-            setListaPokemons([response])
+            //Para previnir que a página quebre quando não tiver nada no campo de busca
+            if (nome != ""){
+                const request = await fetch(`https://pokeapi.co/api/v2/pokemon/${nome}`)
+                const response = await request.json()
+                setListaPokemons([response])
+            }
+            else{
+                setListaPokemons([])
+            }
 
         }
         catch(error){
@@ -210,13 +212,13 @@ function ListaPokemons(){
                     loading ? (<p>Carregando...</p>) : listaPokemons.length > 0 ?  (
                                             listaPokemons.map((pokemon, index) => ( 
                                                     <CardPokemon 
-                                                        key={index}
+                                                        key={pokemon.id}
                                                         isFavorito={listaFavoritos.includes(pokemon.id)}
                                                         handleFavoritar ={handleFavoritar} 
                                                         nome={pokemon.name}
                                                         id = {pokemon.id} 
                                                         //Percorrendo os tipos e usando um map com join para mostrar corretamente no card quando tem mais de um tipo
-                                                        tipo={pokemon.types.map(t => t.type.name).join(' / ')} 
+                                                        tipos={pokemon.types} 
                                                         imagem={pokemon.sprites.front_default} 
                                                         //Passando a função de abrir modal com os parâmetros certos ao clicar no botão
                                                         mostrarDetalhes={() => mostrarDetalhes(pokemon)} 

@@ -33,7 +33,7 @@ function Paginacao({ paginaAtual, qtdPaginas, setPagina }) {
         {p}
       </button>
     );
-  } + 2;
+  }
 
   return (
     <div className="paginacao">
