@@ -4,7 +4,8 @@ function Footer(){
     return(
         <>
             <footer>
-                <p>pokeapi.co/api/v2/</p>
+                <p>API usada: <a href="https://pokeapi.co/" target="_blank">PokeAPI</a></p>
+                <p>Desenvolvido por: <a href="https://github.com/RenzisElen" target="_blank"> Elen Lanzoni</a></p>
             </footer>
         </>
     )
